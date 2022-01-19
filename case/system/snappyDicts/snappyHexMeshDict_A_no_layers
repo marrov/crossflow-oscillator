@@ -34,18 +34,18 @@ geometry
         type triSurfaceMesh;
         regions
         {
-            inlet_pipe              { naem inlet_pipe; }
-            wall_pipe_small         { naem wall_pipe_small; }
-            wall_FO_inner_right     { naem wall_FO_inner_right; }
-            wall_pipe_union         { naem wall_pipe_union; }
-            wall_pipe_big           { naem wall_pipe_big; }
-            outlet                  { naem outlet; }
-            wall_FO_outer_top       { naem wall_FO_outer_top; }
-            wall_FO_outer_bottom    { naem wall_FO_outer_bottom; }
-            wall_FO_inlet_right     { naem wall_FO_inlet_right; }
-            inlet_FO                { naem inlet_FO; }
-            wall_FO_inlet_left      { naem wall_FO_inlet_left; }
-            wall_FO_inner_left      { naem wall_FO_inner_left; }
+            inlet_pipe              { name inlet_pipe; }
+            wall_pipe_small         { name wall_pipe_small; }
+            wall_FO_inner_right     { name wall_FO_inner_right; }
+            wall_pipe_union         { name wall_pipe_union; }
+            wall_pipe_big           { name wall_pipe_big; }
+            outlet                  { name outlet; }
+            wall_FO_outer_top       { name wall_FO_outer_top; }
+            wall_FO_outer_bottom    { name wall_FO_outer_bottom; }
+            wall_FO_inlet_right     { name wall_FO_inlet_right; }
+            inlet_FO                { name inlet_FO; }
+            wall_FO_inlet_left      { name wall_FO_inlet_left; }
+            wall_FO_inner_left      { name wall_FO_inner_left; }
         }
     }
 
@@ -252,7 +252,7 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (0 0 0); // Inside point
+    locationInMesh (0.01 0.01 0.01); // Inside point
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow
