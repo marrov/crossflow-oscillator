@@ -34,18 +34,22 @@ geometry
         type triSurfaceMesh;
         regions
         {
-            wallMain        { name wallMain; }
-            outlet          { name outlet; }            
-            wallUnion       { name wallUnion; }
-            wallPipeOut     { name wallPipeOut; }
-            wallSmall       { name wallSmall; }
-            inlet           { name inlet; }         
-            wallPipeUnion   { name wallPipeUnion; }
-            wallPipeIn      { name wallPipeIn; }
-            injector        { name injector; }
+            inlet_pipe              { naem inlet_pipe; }
+            wall_pipe_small         { naem wall_pipe_small; }
+            wall_FO_inner_right     { naem wall_FO_inner_right; }
+            wall_pipe_union         { naem wall_pipe_union; }
+            wall_pipe_big           { naem wall_pipe_big; }
+            outlet                  { naem outlet; }
+            wall_FO_outer_top       { naem wall_FO_outer_top; }
+            wall_FO_outer_bottom    { naem wall_FO_outer_bottom; }
+            wall_FO_inlet_right     { naem wall_FO_inlet_right; }
+            inlet_FO                { naem inlet_FO; }
+            wall_FO_inlet_left      { naem wall_FO_inlet_left; }
+            wall_FO_inner_left      { naem wall_FO_inner_left; }
         }
     }
 
+    /*
     cylinderPipe1
     {
         type searchableCylinder;
@@ -108,7 +112,7 @@ geometry
         radius2         0.005;
         innerRadius2    0.0; 
     }           
-
+    */
 };
 
 
@@ -180,8 +184,8 @@ castellatedMeshControls
                 injector        { level (0 0); }
                 inlet           { level (0 0); }
                 outlet          { level (0 0); }
-                "wall.*"        { level (2 2); }
-                "wallPipe.*"    { level (3 3); }
+                "wall_pipe.*"   { level (2 2); }
+                "wall_FO.*"     { level (3 3); }
             }
         }
     }
@@ -204,6 +208,7 @@ castellatedMeshControls
 
     refinementRegions
     {
+        /*
         cylinderPipe1
         {
             mode inside;
@@ -233,7 +238,8 @@ castellatedMeshControls
         {
             mode inside;
             levels ((3 3));
-        }   
+        }
+        */
     }
 
 
@@ -303,27 +309,7 @@ addLayersControls
 
     // Per final patch (so not geometry!) the layer information
     layers
-    {
-        "wallPipeIn"
-        {
-            nSurfaceLayers 5;
-        }
-        "wallPipeOut"
-        {
-            nSurfaceLayers 5;
-        }
-        "wallPipeUnion"
-        {
-            nSurfaceLayers 5;
-        }                
-        "(wallMain|wallSmall)"
-        {
-            nSurfaceLayers 5;
-        }
-        "wallUnion"
-        {
-            nSurfaceLayers 5;
-        }     
+    {  
     }
 
     // Expansion factor for layer mesh
