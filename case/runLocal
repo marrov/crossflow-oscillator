@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Source environment variables:
+source /scratch/marrs/OpenFOAM/OpenFOAM-6/etc/bashrc
+
+#---------------------------------------------------------------------------------------------------------
+
+# PROGRAM STARTS HERE
+
+#---------------------------------------------------------------------------------------------------------
+
+# Decomposing...
+decomposePar -latestTime -force > logs/log.decomposePar 2>&1
+mpirun -bind-to core renumberMesh -overwrite -parallel > logs/log.renumberMesh 2>&1
+
+# Running...
+mpirun -bind-to core pimpleKsgsFoam -parallel > logs/log.pimpleKsgsFoam 2>&1
+
+#---------------------------------------------------------------------------------------------------------

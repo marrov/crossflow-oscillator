@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Source environment variables:
+source /scratch/marrs/OpenFOAM/OpenFOAM-v1912/etc/bashrc
+
+#---------------------------------------------------------------------------------------------------------
+
+# PROGRAM STARTS HERE
+
+#---------------------------------------------------------------------------------------------------------
+
+# Meshing...
+rm -r constant/polyMesh/
+blockMesh > logs/log.blockMesh 2>&1
+surfaceFeatureExtract > logs/log.surfaceFeatureExtract 2>&1
+cartesianMesh > logs/log.cartesianMesh 2>&1
+checkMesh -allGeometry -allTopology > logs/log.checkMesh 2>&1
+
+#---------------------------------------------------------------------------------------------------------
