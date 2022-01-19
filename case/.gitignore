@@ -3,3 +3,7 @@ logs/
 
 # Mesh
 constant/polyMesh/
+
+# ParaView
+*.foam
+*.paraFoam
