@@ -1,0 +1,202 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application         pimpleKsgsFoam;
+
+startFrom           latestTime;
+
+startTime           0;
+
+stopAt              endTime;
+
+endTime             1;
+
+deltaT              1e-07;
+
+writeControl        adjustableRunTime;
+
+writeInterval       0.01;
+
+purgeWrite          0;
+
+writeFormat     	binary;
+
+writePrecision  	7;
+
+writeCompression 	off;
+
+timeFormat      	general;
+
+timePrecision   	7;
+
+adjustTimeStep  	yes;
+
+maxCo           	0.4;
+
+runTimeModifiable 	true;
+
+libs ("libLEMOS-6.so");
+
+functions
+{
+
+    #includeFunc scalarTransport
+
+    slices
+    {
+        type                surfaces;
+
+        writeControl        timeStep;
+        writeInterval       50;
+
+        surfaceFormat       vtk;
+        interpolationScheme cellPoint;
+    
+        x                   (1 0 0);
+        y                   (0 1 0);
+        z                   (0 0 1);
+        origin              (0 0 0);
+    
+    cuttingPlane
+    {
+        type                cuttingPlane;
+        planeType           pointAndNormal;
+        pointAndNormalDict
+        {
+            basePoint       $origin;
+            normalVector    $x;
+        }
+        interpolate         true;
+    }
+    
+    fields                  
+    (
+        U
+        s
+    );
+
+    surfaces        
+    (
+        xNormal
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       (0.0175 0 0);
+                normalVector    $x;
+            }
+        }
+
+        yNormal
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       $origin;
+                normalVector    $y;
+            }
+        }
+
+        zNormal_FO
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       $origin;
+                normalVector    $z;
+            }
+        }
+
+        zNormal_A
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       (0 0 0.0115);
+                normalVector    $z;
+            }
+        } 
+
+        zNormal_B
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       (0 0 0.0345);
+                normalVector    $z;
+            }
+        } 
+
+        zNormal_C
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       (0 0 0.0805);
+                normalVector    $z;
+            }
+        }
+
+        zNormal_outlet
+        {
+            $cuttingPlane;
+            pointAndNormalDict
+            {
+                basePoint       (0 0 0.1295);
+                normalVector    $z;
+            }
+        }                                                           
+
+    );
+    }
+
+/*
+    fieldAverage1
+    {
+        type                fieldAverage;
+        libs                ("libfieldFunctionObjects.so");
+        enabled             true;
+        writeControl       	writeTime;
+        fields
+        (
+            U
+            {
+                mean            on;
+                prime2Mean      on;
+                base            time;
+            }
+
+            ksgs
+            {
+                mean            on;
+                prime2Mean      off;
+                base            time;
+            }
+
+            s
+            {
+                mean            on;
+                prime2Mean      on;
+                base            time;
+            }            
+        );
+    }
+*/
+}    
+
+
+// ************************************************************************* //
