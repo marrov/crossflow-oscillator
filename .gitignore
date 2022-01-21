@@ -1,15 +1,19 @@
 # Logs
-logs/
+case/logs/
 
 # Mesh
-constant/polyMesh/
+case/constant/polyMesh/
+
+# Postprocessing
+case/postProcessing/
+case/sequencedVTK/
 
 # ParaView
 *.foam
 *.paraFoam
 
 # Parallel running
-processor*/
+case/processor*/
 
 # Remote execution
 nohup.out
