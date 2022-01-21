@@ -34,80 +34,29 @@ geometry
         type triSurfaceMesh;
         regions
         {
-            wallMain        { name wallMain; }
-            outlet          { name outlet; }            
-            wallUnion       { name wallUnion; }
-            wallPipeOut     { name wallPipeOut; }
-            wallSmall       { name wallSmall; }
-            inlet           { name inlet; }         
-            wallPipeUnion   { name wallPipeUnion; }
-            wallPipeIn      { name wallPipeIn; }
-            injector        { name injector; }
+            inlet_pipe              { name inlet_pipe; }
+            wall_pipe_small         { name wall_pipe_small; }
+            wall_FO_inner_right     { name wall_FO_inner_right; }
+            wall_pipe_union         { name wall_pipe_union; }
+            wall_pipe_big           { name wall_pipe_big; }
+            outlet                  { name outlet; }
+            wall_FO_outer_top       { name wall_FO_outer_top; }
+            wall_FO_outer_bottom    { name wall_FO_outer_bottom; }
+            wall_FO_inlet_right     { name wall_FO_inlet_right; }
+            inlet_FO                { name inlet_FO; }
+            wall_FO_inlet_left      { name wall_FO_inlet_left; }
+            wall_FO_inner_left      { name wall_FO_inner_left; }
+            wall_FO_mid_right       { name wall_FO_mid_right; }
+            wall_FO_mid_left        { name wall_FO_mid_left; }
         }
     }
 
-    cylinderPipe1
+    FO
     {
-        type searchableCylinder;
-        point1 (-0.028 0 0);
-        point2 ( 0.030 0 0);
-        radius 0.004;       
+        type            searchableBox;
+        min             (-0.0311 -0.0105 -0.0015);
+        max             ( 0       0.0105  0.0015);
     }
-
-    cylinderPipe2
-    {
-        type searchableCylinder;
-        point1 (-0.028 -0.0175 0.0);
-        point2 (-0.028  0.0000 0.0);
-        radius 0.003;       
-    }
-
-    cylinderMain
-    {
-        type searchableCylinder;
-        point1 ( 0.065 0.0 0.0);
-        point2 (-0.050 0.0 0.0);
-        radius 0.02;       
-    }
-
-    cylinderOutlet
-    {
-        type searchableCylinder;
-        point1 (-0.040 0.0 0.0);
-        point2 (-0.090 0.0 0.0);
-        radius 0.02;       
-    }
-
-    cylinderInlet
-    {
-        type searchableCylinder;
-        point1 (0.083 0.0 0.0);
-        point2 (0.065 0.0 0.0);
-        radius 0.02;       
-    }
-
-    // NOTE: only with OFv1912
-    cone1
-    {      
-        type            searchableCone;
-        point1          (0.005 0 0);
-        radius1         0.0045;
-        innerRadius1    0.0;
-        point2          (0.033 0 0);
-        radius2         0.0145;
-        innerRadius2    0.0;            
-    }
-
-    cone2
-    {
-        type            searchableCone;
-        point1          (0.033 0 0);
-        radius1         0.0145;
-        innerRadius1    0.0;
-        point2          (0.0475 0 0);
-        radius2         0.005;
-        innerRadius2    0.0; 
-    }           
 
 };
 
@@ -154,7 +103,7 @@ castellatedMeshControls
     (
         {
             file "geometry.eMesh";
-            level 0;
+            level 1;
         }
     );
 
@@ -177,11 +126,8 @@ castellatedMeshControls
             level (0 0);
             regions
             {
-                injector        { level (0 0); }
-                inlet           { level (0 0); }
-                outlet          { level (0 0); }
-                "wall.*"        { level (2 2); }
-                "wallPipe.*"    { level (3 3); }
+                "wall_pipe.*"   { level (1 1); }
+                "wall_FO.*"     { level (2 2); }
             }
         }
     }
@@ -204,36 +150,11 @@ castellatedMeshControls
 
     refinementRegions
     {
-        cylinderPipe1
-        {
-            mode inside;
-            levels ((3 3));
-        }
-        cylinderPipe2
-        {
-            mode inside;
-            levels ((3 3));
-        }  
-        cylinderMain
+        FO
         {
             mode inside;
             levels ((2 2));
-        }     
-        cylinderInlet
-        {
-            mode inside;
-            levels ((1 1));
-        }          
-        cylinderOutlet
-        {
-            mode inside;
-            levels ((1 1));
-        }  
-        "cone.*"
-        {
-            mode inside;
-            levels ((3 3));
-        }   
+        }
     }
 
 
@@ -246,7 +167,7 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
-    locationInMesh (0 0 0); // Inside point
+    locationInMesh (0.01 0.01 0.01); // Inside point
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow
@@ -293,7 +214,6 @@ snapControls
 }
 
 
-
 // Settings for the layer addition.
 addLayersControls
 {
@@ -304,28 +224,23 @@ addLayersControls
     // Per final patch (so not geometry!) the layer information
     layers
     {
-        "wallPipeIn"
+        "wall_FO_inner_right"
         {
             nSurfaceLayers 5;
         }
-        "wallPipeOut"
+        "wall_FO_inner_left"
         {
             nSurfaceLayers 5;
         }
-        "wallPipeUnion"
-        {
-            nSurfaceLayers 5;
-        }                  
     }
 
     // Expansion factor for layer mesh
     expansionRatio 1.25;
 
-
     // Wanted thickness of final added cell layer. If multiple layers
     // is the thickness of the layer furthest away from the wall.
     // See relativeSizes parameter.
-    firstLayerThickness 0.0000275;
+    finalLayerThickness 0.00007;
 
     // Minimum thickness of cell layer. If for any reason layer
     // cannot be above minThickness do not add layer.
@@ -341,7 +256,7 @@ addLayersControls
 
     // When not to extrude surface. 0 is flat surface, 90 is when two faces
     // are perpendicular
-    featureAngle 110;
+    featureAngle 150;
 
     // Maximum number of snapping relaxation iterations. Should stop
     // before upon reaching a correct mesh.
@@ -357,11 +272,11 @@ addLayersControls
     nSmoothThickness 10;
 
     // Stop layer growth on highly warped cells
-    maxFaceThicknessRatio 0.5;
+    maxFaceThicknessRatio 0.75;
 
     // Reduce layer growth where ratio thickness to medial
     // distance is large
-    maxThicknessToMedialRatio 0.3;
+    maxThicknessToMedialRatio 0.5;
 
     // Angle used to pick up medial axis points
     minMedianAxisAngle 90;
@@ -372,7 +287,7 @@ addLayersControls
     // Overall max number of layer addition iterations. The mesher will exit
     // if it reaches this number of iterations; possibly with an illegal
     // mesh.
-    nLayerIter 30;
+    nLayerIter 20;
 
     // Max number of iterations after which relaxed meshQuality controls
     // get used. Up to nRelaxIter it uses the settings in meshQualityControls,
@@ -386,7 +301,7 @@ addLayersControls
 // where to undo.
 meshQualityControls
 {
-    maxNonOrtho             60;
+    maxNonOrtho             70;
     maxBoundarySkewness     20;
     maxInternalSkewness     4;
     maxConcave              80;
@@ -402,7 +317,7 @@ meshQualityControls
     errorReduction          0.75;
     relaxed
     {
-        maxNonOrtho         65;
+        maxNonOrtho         75;     
     } 
 }
 

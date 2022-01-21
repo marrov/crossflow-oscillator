@@ -214,7 +214,6 @@ snapControls
 }
 
 
-
 // Settings for the layer addition.
 addLayersControls
 {
@@ -224,29 +223,40 @@ addLayersControls
 
     // Per final patch (so not geometry!) the layer information
     layers
-    {        
-        "wall_pipe_small"
+    {
+        "wall_FO_outer_top"
         {
-            nSurfaceLayers 3;
+            nSurfaceLayers 4;
         }
-        "wall_pipe_union"
+        "wall_FO_outer_bottom"
         {
-            nSurfaceLayers 3;
-        }  
-        "wall_pipe_big"
+            nSurfaceLayers 4;
+        }
+        "wall_FO_inlet_right"
         {
-            nSurfaceLayers 3;
-        }           
+            nSurfaceLayers 4;
+        }
+        "wall_FO_inlet_left"
+        {
+            nSurfaceLayers 4;
+        }
+        "wall_FO_mid_right"
+        {
+            nSurfaceLayers 4;
+        }
+        "wall_FO_mid_left"
+        {
+            nSurfaceLayers 4;
+        }
     }
 
     // Expansion factor for layer mesh
     expansionRatio 1.25;
 
-
     // Wanted thickness of final added cell layer. If multiple layers
     // is the thickness of the layer furthest away from the wall.
     // See relativeSizes parameter.
-    finalLayerThickness 0.00009;
+    finalLayerThickness 0.00008;
 
     // Minimum thickness of cell layer. If for any reason layer
     // cannot be above minThickness do not add layer.
@@ -278,11 +288,11 @@ addLayersControls
     nSmoothThickness 10;
 
     // Stop layer growth on highly warped cells
-    maxFaceThicknessRatio 0.75;
+    maxFaceThicknessRatio 0.8;
 
     // Reduce layer growth where ratio thickness to medial
     // distance is large
-    maxThicknessToMedialRatio 0.5;
+    maxThicknessToMedialRatio 0.8;
 
     // Angle used to pick up medial axis points
     minMedianAxisAngle 90;

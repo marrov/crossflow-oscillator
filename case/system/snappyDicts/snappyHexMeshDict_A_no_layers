@@ -46,73 +46,18 @@ geometry
             inlet_FO                { name inlet_FO; }
             wall_FO_inlet_left      { name wall_FO_inlet_left; }
             wall_FO_inner_left      { name wall_FO_inner_left; }
+            wall_FO_mid_right       { name wall_FO_mid_right; }
+            wall_FO_mid_left        { name wall_FO_mid_left; }
         }
     }
 
-    /*
-    cylinderPipe1
+    FO
     {
-        type searchableCylinder;
-        point1 (-0.028 0 0);
-        point2 ( 0.030 0 0);
-        radius 0.004;       
+        type            searchableBox;
+        min             (-0.0311 -0.0105 -0.0015);
+        max             ( 0       0.0105  0.0015);
     }
 
-    cylinderPipe2
-    {
-        type searchableCylinder;
-        point1 (-0.028 -0.0175 0.0);
-        point2 (-0.028  0.0000 0.0);
-        radius 0.003;       
-    }
-
-    cylinderMain
-    {
-        type searchableCylinder;
-        point1 ( 0.065 0.0 0.0);
-        point2 (-0.050 0.0 0.0);
-        radius 0.02;       
-    }
-
-    cylinderOutlet
-    {
-        type searchableCylinder;
-        point1 (-0.040 0.0 0.0);
-        point2 (-0.090 0.0 0.0);
-        radius 0.02;       
-    }
-
-    cylinderInlet
-    {
-        type searchableCylinder;
-        point1 (0.083 0.0 0.0);
-        point2 (0.065 0.0 0.0);
-        radius 0.02;       
-    }
-
-    // NOTE: only with OFv1912
-    cone1
-    {      
-        type            searchableCone;
-        point1          (0.005 0 0);
-        radius1         0.0045;
-        innerRadius1    0.0;
-        point2          (0.033 0 0);
-        radius2         0.0145;
-        innerRadius2    0.0;            
-    }
-
-    cone2
-    {
-        type            searchableCone;
-        point1          (0.033 0 0);
-        radius1         0.0145;
-        innerRadius1    0.0;
-        point2          (0.0475 0 0);
-        radius2         0.005;
-        innerRadius2    0.0; 
-    }           
-    */
 };
 
 
@@ -158,7 +103,7 @@ castellatedMeshControls
     (
         {
             file "geometry.eMesh";
-            level 0;
+            level 1;
         }
     );
 
@@ -181,11 +126,8 @@ castellatedMeshControls
             level (0 0);
             regions
             {
-                injector        { level (0 0); }
-                inlet           { level (0 0); }
-                outlet          { level (0 0); }
-                "wall_pipe.*"   { level (2 2); }
-                "wall_FO.*"     { level (3 3); }
+                "wall_pipe.*"   { level (1 1); }
+                "wall_FO.*"     { level (2 2); }
             }
         }
     }
@@ -208,38 +150,11 @@ castellatedMeshControls
 
     refinementRegions
     {
-        /*
-        cylinderPipe1
-        {
-            mode inside;
-            levels ((3 3));
-        }
-        cylinderPipe2
-        {
-            mode inside;
-            levels ((3 3));
-        }  
-        cylinderMain
+        FO
         {
             mode inside;
             levels ((2 2));
-        }     
-        cylinderInlet
-        {
-            mode inside;
-            levels ((1 1));
-        }          
-        cylinderOutlet
-        {
-            mode inside;
-            levels ((1 1));
-        }  
-        "cone.*"
-        {
-            mode inside;
-            levels ((3 3));
         }
-        */
     }
 
 
