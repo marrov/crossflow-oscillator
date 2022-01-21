@@ -1,0 +1,15 @@
+# Logs
+logs/
+
+# Mesh
+constant/polyMesh/
+
+# ParaView
+*.foam
+*.paraFoam
+
+# Parallel running
+processor*/
+
+# Remote execution
+nohup.out
