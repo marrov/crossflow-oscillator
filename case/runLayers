@@ -12,20 +12,19 @@ source /scratch/marrs/OpenFOAM/OpenFOAM-6/etc/bashrc
 # Meshing...
 
 # Preliminary
-rm -r constant/polyMesh/
-blockMesh > logs/log.blockMesh 2>&1
-surfaceFeatureExtract > logs/log.surfaceFeatureExtract 2>&1
+rm -r constant/polyMesh
+cp -r constant/no_layers constant/polyMesh
 
 # With cfMesh
 # cartesianMesh > logs/log.cartesianMesh 2>&1 # With cfMesh case diverges, change to sHM
 
 # With snappy (sHM) in three steps
-cp system/snappyDicts/snappyHexMeshDict_A_no_layers system/snappyHexMeshDict
-snappyHexMesh -overwrite > logs/log.snappyHexMesh_A 2>&1
-#cp system/snappyDicts/snappyHexMeshDict_B_FO_layers system/snappyHexMeshDict
-#snappyHexMesh -overwrite > logs/log.snappyHexMesh_B 2>&1
-#cp system/snappyDicts/snappyHexMeshDict_C_pipe_layers system/snappyHexMeshDict
-#snappyHexMesh -overwrite > logs/log.snappyHexMesh_C 2>&1
+cp system/snappyDicts/snappyHexMeshDict_B1_FO_inner_layers system/snappyHexMeshDict
+snappyHexMesh -overwrite > logs/log.snappyHexMesh_B1 2>&1
+cp system/snappyDicts/snappyHexMeshDict_B2_FO_outer_layers system/snappyHexMeshDict
+snappyHexMesh -overwrite > logs/log.snappyHexMesh_B2 2>&1
+cp system/snappyDicts/snappyHexMeshDict_C_pipe_layers system/snappyHexMeshDict
+snappyHexMesh -overwrite > logs/log.snappyHexMesh_C 2>&1
 
 # Check mesh
 checkMesh -allGeometry -allTopology > logs/log.checkMesh 2>&1
