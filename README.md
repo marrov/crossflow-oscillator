@@ -2,7 +2,7 @@
 
 This repository contains an OpenFOAM LES simulation of a fluidic oscillator in crossflow. [Here](https://github.com/marrov/crossflow-oscillator/tree/main/case) you can find all the files to run this simulation youself!
 
-Here you can see some animations of the flow behaviour in this configuration:
+Below you will see some animations of the flow behaviour in this configuration:
 
 https://user-images.githubusercontent.com/54272586/151761065-29990dc5-4b7e-4c27-8d30-33c55475bd0e.mp4
 
