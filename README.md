@@ -1,6 +1,6 @@
 # Fluidic oscillator in crossflow
 
-This repository contains an OpenFOAM LES simulation of a fluidic oscillator in crossflow.
+This repository contains an OpenFOAM LES simulation of a fluidic oscillator in crossflow. [Here](https://github.com/marrov/crossflow-oscillator/tree/main/case) you can find all the files to run this simulation youself!
 
 Here you can see some animations of the flow behaviour in this configuration:
 
